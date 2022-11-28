@@ -27,23 +27,26 @@ function addBookToLibrary() {
 
 }
 
+let library;
 const bookTable = document.getElementById("bookTable");
 
 function showBook () {
+    library = myLibrary;
     bookTable.innerHTML = "";
     myLibrary.forEach((Book) => {
         const htmlBook = `
           <tr>
             <td>${Book.title}</td>
             <td>${Book.author}</td>
-            <td><button class="status-button">${Book.read}</button></td>
-            <td><button class="delete">delete</button></td>
+            <td><button class="statusButton">${Book.read}</button></td>
+            <td><button name="delete" class="delete">delete</button></td>
           </tr>
           `;
         bookTable.insertAdjacentHTML("afterbegin", htmlBook);
       });
     }
-showBook();
+showBook(); 
+
 function clearFields() {
     formTitle.value = ""
     formAuthor.value = ""
@@ -54,5 +57,45 @@ form.addEventListener ("submit", (e)=> {
     e.preventDefault();
     addBookToLibrary();
 
-
 });
+
+// function deleteBook (title){
+// for(var i = myLibrary.length - 1; i >= 0; i--) {
+//     if(myLibrary[i] === title) {
+//        myLibrary.splice(i, 1);
+//     }
+// }
+// }
+
+// function findPosition (titleBook){
+//     for (var i = 0; i < myLibrary.length; i++) {
+//        if(myLibrary[i].title == titleBook){
+//             return i;
+//         }
+//     }
+//     return
+//            -1;
+// }
+
+function deleteBook(element){
+    if(element.name == "delete" ){
+           element.parentNode.parentNode.remove()
+    }
+}
+
+const table =  document  
+.querySelector("table")
+.addEventListener("click", (e) => {
+    
+    deleteBook(e.target);
+    }
+);
+
+function bookStatus(book){
+    if (library[book].read == "read"){
+        library[book].read = "no read"
+    }
+    else{
+        library[book].read = "no read"
+    }
+}
