@@ -1,5 +1,5 @@
 let myLibrary = [
-  {title: "the hunger games", author: "Suzanne Collins", read: "read"}
+  {title: "The hunger games", author: "Suzanne Collins", read: "read"}
 ];
 
 class Book {
@@ -37,7 +37,7 @@ function showBook () {
           <tr>
             <td>${Book.title}</td>
             <td>${Book.author}</td>
-            <td><button class="statusButton">${Book.read}</button></td>
+            <td><button name="status" class="statusButton">${Book.read}</button></td>
             <td><button name="delete" class="delete">delete</button></td>
           </tr>
           `;
@@ -69,11 +69,23 @@ for(var i = myLibrary.length - 1; i >= 0; i--) {
 }
 }
 
-function deleteBookDom(element){
-    if(element.name == "delete" ){
-           element.parentNode.parentNode.remove()
-           
+function findBook (bookN){
+    for(var i = myLibrary.length - 1; i >= 0; i--) {
+        if(myLibrary[i].title === bookN) {
+            if(myLibrary[i].read == "read"){
+                myLibrary[i].read = "not read"
+                showBook();
+            }
+            else{
+                myLibrary[i].read = "read"
+                showBook();
+            }
+        }
     }
+    }
+
+function deleteBookDom(element){
+    element.parentNode.parentNode.remove()  
 }
 
 
@@ -81,17 +93,13 @@ const table =  document
 .querySelector("table")
 .addEventListener("click", (e) => {
     const bookNode = e.target.parentNode.parentNode.childNodes[1];  //returns the element containing the title
-    const bookName = bookNode.innerText;                                //returns the title book
-    deleteBookObj(bookName);
-    deleteBookDom(e.target);
+    const bookName = bookNode.innerText;                            //returns the title book
+        if(e.target.name == "delete"){            //Avoid removing objects from the array with the read button 
+            deleteBookObj(bookName);
+            deleteBookDom(e.target);
+        }
+        if(e.target.name == "status"){
+            findBook(bookName)
+        }
     }
 );
-
-function bookStatus(book){
-    if (library[book].read == "read"){
-        library[book].read = "no read"
-    }
-    else{
-        library[book].read = "no read"
-    }
-}
