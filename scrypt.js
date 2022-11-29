@@ -24,7 +24,6 @@ function addBookToLibrary() {
         myLibrary.push(newBook);
         showBook();
         clearFields();
-
 }
 
 let library;
@@ -55,39 +54,36 @@ function clearFields() {
 
 form.addEventListener ("submit", (e)=> {
     e.preventDefault();
+    
+
+    
     addBookToLibrary();
 
 });
 
-// function deleteBook (title){
-// for(var i = myLibrary.length - 1; i >= 0; i--) {
-//     if(myLibrary[i] === title) {
-//        myLibrary.splice(i, 1);
-//     }
-// }
-// }
-
-// function findPosition (titleBook){
-//     for (var i = 0; i < myLibrary.length; i++) {
-//        if(myLibrary[i].title == titleBook){
-//             return i;
-//         }
-//     }
-//     return
-//            -1;
-// }
-
-function deleteBook(element){
-    if(element.name == "delete" ){
-           element.parentNode.parentNode.remove()
+function deleteBookObj (bookN){
+for(var i = myLibrary.length - 1; i >= 0; i--) {
+    if(myLibrary[i].title === bookN) {
+        myLibrary.splice(i, 1);
     }
 }
+}
+
+function deleteBookDom(element){
+    if(element.name == "delete" ){
+           element.parentNode.parentNode.remove()
+           
+    }
+}
+
 
 const table =  document  
 .querySelector("table")
 .addEventListener("click", (e) => {
-    
-    deleteBook(e.target);
+    const bookNode = e.target.parentNode.parentNode.childNodes[1];  //returns the element containing the title
+    const bookName = bookNode.innerText;                                //returns the title book
+    deleteBookObj(bookName);
+    deleteBookDom(e.target);
     }
 );
 
